@@ -15,11 +15,12 @@ namespace MassTransitDemo
 
             Initially(
                 When(MyCommand)
-                    .Then(
-                    context =>
+                    .ThenAsync(
+                    async context =>
                     {
                         context.Saga.Id = context.Message.Id;
                         logger.LogInformation($"Entering state machine for Id {context.Message.Id}");
+                        await Task.Delay(TimeSpan.FromSeconds(5));
                     })
                     .TransitionTo(Final));
 
